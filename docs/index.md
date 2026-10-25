@@ -95,6 +95,9 @@ from the pickup date to the expected delivery date. When every call is refused, 
 is raised. Rates come cheapest first; `toPickupPoint` is `false`.
 
 > [!WARNING]
+> Known defect: rating always sends sub-product `P`, where it should read the `sub_product` option as booking does.
+
+> [!WARNING]
 > Without `prices` (or `rates`), every served product is rated at 0 INR: give the contract's
 > prices in one of the two.
 
@@ -136,6 +139,9 @@ this order:
 
 `undelivered` contains `delivered`: an "undelivered" scan without the type `UD` reads as
 `DELIVERED`.
+
+> [!WARNING]
+> Known defect: an "undelivered" scan without the type `UD` reads `DELIVERED`, where it is an `EXCEPTION`.
 
 **Cancel.** `CancelWaybill` for the AWB number: `true` unless the answer has `IsError`.
 
