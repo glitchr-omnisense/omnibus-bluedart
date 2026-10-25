@@ -62,10 +62,10 @@ final class Api
         if (!\is_array($data)) {
             // Tracking answers XML
             $xml = @simplexml_load_string($content);
-            if (false !== $xml) {
+            if (false !== $xml && $status < 400 && 'html' !== strtolower($xml->getName())) { // not a proxy's error page
                 return json_decode(json_encode($xml), true) ?: [];
             }
-            throw new CarrierException('bluedart', sprintf('Blue Dart answered HTTP %d with a body that is not JSON.', $status));
+            throw new CarrierException('bluedart', sprintf('Blue Dart answered HTTP %d with a body that is neither its JSON nor its XML.', $status));
         }
         if ($status >= 400) {
             throw new CarrierException('bluedart', (string) ($data['error-response'][0]['Message'] ?? $data['Message'] ?? $data['message'] ?? $data['fault']['faultstring'] ?? sprintf('HTTP %d', $status)), isset($data['error-response'][0]['ErrorCode']) ? (string) $data['error-response'][0]['ErrorCode'] : null);

@@ -39,12 +39,16 @@ final class RatingAction implements ActionInterface, ApiAwareInterface
         $s = $request->shipment;
         $prices = (array) $s->option('prices', []);
         $rates = [];
+        $failure = null;
+        $answered = 0;
         foreach ($s->option('products', array_keys(self::PRODUCTS)) as $product) {
             try {
                 $data = $this->api->call('POST', '/in/transportation/transit/v1/GetDomesticTransitTimeForPinCodeandProduct', ['pPinCodeFrom' => $s->sender->postcode, 'pPinCodeTo' => $s->recipient->postcode, 'pProductCode' => $product, 'pSubProductCode' => 'P', 'pPudate' => '/Date('.(($s->shippingDate ?? new \DateTimeImmutable())->getTimestamp() * 1000).')/', 'pPickupTime' => '16:00', 'profile' => $this->api->profile()]);
-            } catch (\Omnibus\Exception\CarrierException) {
+            } catch (\Omnibus\Exception\CarrierException $e) {
+                $failure = $e;
                 continue;
             }
+            ++$answered;
             $result = $data['GetDomesticTransitTimeForPinCodeandProductResult'] ?? $data;
             if (!empty($result['IsError']) || empty($result['ExpectedDateDelivery'])) {
                 continue;
@@ -54,6 +58,9 @@ final class RatingAction implements ActionInterface, ApiAwareInterface
                 $days = max(0, (int) ceil(((int) ($m[1] / 1000) - ($s->shippingDate ?? new \DateTimeImmutable())->getTimestamp()) / 86400));
             }
             $rates[] = new Rate('bluedart', $product, self::PRODUCTS[$product] ?? 'Blue Dart '.$product, (int) ($prices[$product] ?? 0), 'INR', $days);
+        }
+        if (0 === $answered && null !== $failure) {
+            throw $failure; // every service refused: the carrier failed, not "no rate"
         }
         usort($rates, static fn (Rate $a, Rate $b) => $a->amount <=> $b->amount);
         $request->setResult($rates);
