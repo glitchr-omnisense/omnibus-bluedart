@@ -1,6 +1,6 @@
 # omnibus/bluedart
 
-Blue Dart for [omniscient/omnibus](https://github.com/glitchr-studio/omnibus): serviceability and
+Blue Dart for [omnisense/omnibus](https://github.com/glitchr-omnisense/omnibus): serviceability and
 transit times, waybills with their PDF labels, tracking and cancellation, through Blue Dart's API
 gateway on a JWT. Blue Dart quotes no price: rating says which products serve the lane and in how
 many days, and the amounts come from configuration. The gateway calls:
@@ -22,7 +22,7 @@ on `https://apigateway.bluedart.com` (live) or `https://apigateway-sandbox.blued
 composer require omnibus/bluedart
 ```
 
-Requires PHP 8.2, `omniscient/omnibus` (2.x) and `symfony/http-client` (6.4, 7 or 8); given no
+Requires PHP 8.2, `omnisense/omnibus` (2.x) and `symfony/http-client` (6.4, 7 or 8); given no
 HTTP client, the factory makes one with `HttpClient::create()`. In a Symfony application with
 `Omnibus\Bridge\Symfony\OmnibusBundle`, the factory is registered as soon as the package is
 installed.
@@ -47,7 +47,7 @@ installed.
 | `customer_code` | string | - | yes | the customer code (also the shipper's `CustomerCode`) |
 | `origin_area` | ?string | `null` (sent as `BOM`) | no | the account's area code |
 | `sandbox` | bool | `false` | no | `true`: the sandbox gateway |
-| `rates` | list | - | no | prices from configuration instead of the Transit API ([the rates option](https://github.com/glitchr-studio/omnibus/blob/2.x/docs/configuration.md#the-rates-option)): with it, the Transit API is not called |
+| `rates` | list | - | no | prices from configuration instead of the Transit API ([the rates option](https://github.com/glitchr-omnisense/omnibus/blob/2.x/docs/configuration.md#the-rates-option)): with it, the Transit API is not called |
 
 Shipment options (`Shipment::$options`):
 

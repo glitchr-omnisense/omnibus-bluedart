@@ -1,6 +1,6 @@
 # omnibus/bluedart
 
-Blue Dart for [omniscient/omnibus](https://github.com/glitchr-studio/omnibus): serviceability and
+Blue Dart for [omnisense/omnibus](https://github.com/glitchr-omnisense/omnibus): serviceability and
 transit time (Transit API), waybills with their labels (Waybill API), tracking (Tracking API) and
 cancellation - Blue Dart's API gateway with a JWT.
 
@@ -8,7 +8,7 @@ cancellation - Blue Dart's API gateway with a JWT.
 $gateway = (new BluedartGatewayFactory($http))->create($options);   // $http: the application's HTTP client - none given, the factory makes its own; the options below
 ```
 
-No framework needed: the package requires `omniscient/omnibus` and `symfony/http-client`. In a
+No framework needed: the package requires `omnisense/omnibus` and `symfony/http-client`. In a
 Symfony application, the same through the bundle's configuration:
 
 ```yaml
