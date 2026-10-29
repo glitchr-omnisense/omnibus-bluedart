@@ -10,3 +10,5 @@
 - `rate()` no longer rates a product 0 INR when the shipment's `prices` option gives it no price:
   such a product is neither asked about nor rated (Blue Dart's Transit API quotes no price). Without
   `prices` (or configured `rates`), `rate()` answers no rate.
+- Rating sends the `sub_product` option as the transit query's sub-product, as booking does; it
+  always sent `P`.

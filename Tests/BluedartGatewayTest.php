@@ -111,4 +111,13 @@ final class BluedartGatewayTest extends TestCase
         self::assertSame(['D'], array_map(static fn ($r) => $r->service, $rates));
         self::assertSame(18000, $rates[0]->amount);
     }
+
+    /** The `sub_product` option is the transit query's pSubProductCode, as it is the waybill's SubProductCode (P by default). */
+    public function testRatingSendsTheSubProductBookingSends(): void
+    {
+        $s = self::shipment();
+        $this->gateway()->rate(new Shipment($s->sender, $s->recipient, $s->parcels, reference: 'ORDER-1042', options: ['prices' => ['A' => 45000], 'sub_product' => 'C']));
+        $transit = array_values(array_filter($this->calls, static fn ($c) => str_contains($c[1], 'GetDomesticTransitTime')));
+        self::assertSame('C', $transit[0][2]['pSubProductCode']);
+    }
 }

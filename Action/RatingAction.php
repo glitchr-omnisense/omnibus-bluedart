@@ -47,7 +47,7 @@ final class RatingAction implements ActionInterface, ApiAwareInterface
                 continue; // no price, no rate: 0 INR would be a price
             }
             try {
-                $data = $this->api->call('POST', '/in/transportation/transit/v1/GetDomesticTransitTimeForPinCodeandProduct', ['pPinCodeFrom' => $s->sender->postcode, 'pPinCodeTo' => $s->recipient->postcode, 'pProductCode' => $product, 'pSubProductCode' => 'P', 'pPudate' => '/Date('.(($s->shippingDate ?? new \DateTimeImmutable())->getTimestamp() * 1000).')/', 'pPickupTime' => '16:00', 'profile' => $this->api->profile()]);
+                $data = $this->api->call('POST', '/in/transportation/transit/v1/GetDomesticTransitTimeForPinCodeandProduct', ['pPinCodeFrom' => $s->sender->postcode, 'pPinCodeTo' => $s->recipient->postcode, 'pProductCode' => $product, 'pSubProductCode' => (string) $s->option('sub_product', 'P'), 'pPudate' => '/Date('.(($s->shippingDate ?? new \DateTimeImmutable())->getTimestamp() * 1000).')/', 'pPickupTime' => '16:00', 'profile' => $this->api->profile()]);
             } catch (\Omnibus\Exception\CarrierException $e) {
                 $failure = $e;
                 continue;

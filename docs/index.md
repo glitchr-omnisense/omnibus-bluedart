@@ -86,17 +86,14 @@ Shipment options (`Shipment::$options`):
 | `D` | Dart Surfaceline |
 
 **Rate.** For each product (`products`, else the three above, whatever `Shipment::$service`
-says): the Transit API from the sender's PIN code to the recipient's, sub-product `P` (the
-`sub_product` option is not read here), the pickup date `Shipment::$shippingDate` (else now) as
+says): the Transit API from the sender's PIN code to the recipient's, the sub-product
+`sub_product` (`P` by default, as booking sends it), the pickup date `Shipment::$shippingDate` (else now) as
 `/Date(milliseconds)/` and the pickup time `16:00`. A product answering with an error or without
 an expected delivery date does not serve the lane and gives no rate. A product without a price in
 `prices` is neither asked about nor rated: Blue Dart quotes no price, and 0 INR would be one. A
 product that serves the lane gives a rate: the amount `prices[<code>]` in `INR`, `days` the whole days
 from the pickup date to the expected delivery date. When every call is refused, the last refusal
 is raised. Rates come cheapest first; `toPickupPoint` is `false`.
-
-> [!WARNING]
-> Known defect: rating always sends sub-product `P`, where it should read the `sub_product` option as booking does.
 
 > [!NOTE]
 > Without `prices` (or `rates`), `rate()` answers no rate: give the contract's prices in one of
