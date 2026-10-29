@@ -51,15 +51,22 @@ final class TrackingAction implements ActionInterface, ApiAwareInterface
         $request->setResult(new TrackingModel('bluedart', $request->trackingNumber, $status, $events));
     }
 
+    /**
+     * The scan type decides first; without a known type, the words, the failed deliveries
+     * ("undelivered", "not delivered") before "delivered", which they contain.
+     */
     private static function status(?string $type, ?string $scan): TrackingStatus
     {
         $s = strtolower((string) $scan);
 
         return match (true) {
-            'DL' === $type || str_contains($s, 'delivered') => TrackingStatus::DELIVERED,
+            'DL' === $type => TrackingStatus::DELIVERED,
+            'UD' === $type => TrackingStatus::EXCEPTION,
+            'RT' === $type => TrackingStatus::RETURNED,
+            str_contains($s, 'undelivered') || str_contains($s, 'not delivered') || str_contains($s, 'attempt') => TrackingStatus::EXCEPTION,
+            str_contains($s, 'delivered') => TrackingStatus::DELIVERED,
             str_contains($s, 'out for delivery') => TrackingStatus::OUT_FOR_DELIVERY,
-            'RT' === $type || str_contains($s, 'return') => TrackingStatus::RETURNED,
-            'UD' === $type || str_contains($s, 'undelivered') || str_contains($s, 'attempt') => TrackingStatus::EXCEPTION,
+            str_contains($s, 'return') => TrackingStatus::RETURNED,
             str_contains($s, 'softdata') || str_contains($s, 'shipment data') => TrackingStatus::PENDING,
             null !== $type && '' !== $type || '' !== $s => TrackingStatus::IN_TRANSIT,
             default => TrackingStatus::UNKNOWN,

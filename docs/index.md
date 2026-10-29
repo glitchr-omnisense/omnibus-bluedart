@@ -89,17 +89,18 @@ Shipment options (`Shipment::$options`):
 says): the Transit API from the sender's PIN code to the recipient's, sub-product `P` (the
 `sub_product` option is not read here), the pickup date `Shipment::$shippingDate` (else now) as
 `/Date(milliseconds)/` and the pickup time `16:00`. A product answering with an error or without
-an expected delivery date does not serve the lane and gives no rate. A product that does gives a
-rate: the amount `prices[<code>]` (0 when the option has none) in `INR`, `days` the whole days
+an expected delivery date does not serve the lane and gives no rate. A product without a price in
+`prices` is neither asked about nor rated: Blue Dart quotes no price, and 0 INR would be one. A
+product that serves the lane gives a rate: the amount `prices[<code>]` in `INR`, `days` the whole days
 from the pickup date to the expected delivery date. When every call is refused, the last refusal
 is raised. Rates come cheapest first; `toPickupPoint` is `false`.
 
 > [!WARNING]
 > Known defect: rating always sends sub-product `P`, where it should read the `sub_product` option as booking does.
 
-> [!WARNING]
-> Without `prices` (or `rates`), every served product is rated at 0 INR: give the contract's
-> prices in one of the two.
+> [!NOTE]
+> Without `prices` (or `rates`), `rate()` answers no rate: give the contract's prices in one of
+> the two.
 
 **Ship.** `GenerateWayBill`:
 
@@ -124,24 +125,21 @@ An answer with `IsError` raises its first status. The tracking number is the `AW
 the login id and licence key; Blue Dart answers XML or JSON, both read. The scans of the first
 shipment: date and time `d-M-Y H:i` (a scan whose date cannot be read is dated now), the scan text
 as description, the scanned location, the scan code as `code`; sorted oldest first. The status is
-the latest scan's, or `DELIVERED` when the shipment's `StatusType` is `DL`. A scan's status, in
-this order:
+the latest scan's, or `DELIVERED` when the shipment's `StatusType` is `DL`. A scan's status: its
+type first (`DL` `DELIVERED`, `UD` `EXCEPTION`, `RT` `RETURNED`), then, for any other type or
+none, its text, in this order:
 
-| Scan type | Or the text contains | `TrackingStatus` |
-|---|---|---|
-| `DL` | `delivered` | `DELIVERED` |
-| | `out for delivery` | `OUT_FOR_DELIVERY` |
-| `RT` | `return` | `RETURNED` |
-| `UD` | `undelivered`, `attempt` | `EXCEPTION` |
-| | `softdata`, `shipment data` | `PENDING` |
-| any other type, or any other text | | `IN_TRANSIT` |
-| neither | | `UNKNOWN` |
+| The text contains | `TrackingStatus` |
+|---|---|
+| `undelivered`, `not delivered`, `attempt` | `EXCEPTION` |
+| `delivered` | `DELIVERED` |
+| `out for delivery` | `OUT_FOR_DELIVERY` |
+| `return` | `RETURNED` |
+| `softdata`, `shipment data` | `PENDING` |
+| anything else, or any other type | `IN_TRANSIT` |
+| neither a type nor a text | `UNKNOWN` |
 
-`undelivered` contains `delivered`: an "undelivered" scan without the type `UD` reads as
-`DELIVERED`.
-
-> [!WARNING]
-> Known defect: an "undelivered" scan without the type `UD` reads `DELIVERED`, where it is an `EXCEPTION`.
+"undelivered" and "not delivered" are read before "delivered", which they contain.
 
 **Cancel.** `CancelWaybill` for the AWB number: `true` unless the answer has `IsError`.
 
@@ -230,7 +228,9 @@ built; `Pickup`, `GetSlip` and `Paperless` raise `RequestNotSupportedException` 
 Tested offline: `Tests/BluedartGatewayTest.php` (served products rated with configured prices and
 transit days, a product not served left out, `INR`, the profile and the `JWTToken` header; a
 waybill generated with its PDF, the product, the consignee's PIN code, the customer code and the
-declared value; tracking with its location; the cancellation) and `Tests/BluedartContractTest.php`,
+declared value; tracking with its location; "undelivered" and "not delivered" scans read as
+exceptions, with or without the type `UD`; a product without a price not rated, nor asked about;
+the cancellation) and `Tests/BluedartContractTest.php`,
 the family's conformance suite on recorded answers. The example above was run in the core's
 harness on those recorded answers.
 
