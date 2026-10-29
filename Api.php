@@ -3,6 +3,7 @@
 namespace Omnibus\Bluedart;
 
 use Omnibus\Exception\CarrierException;
+use Omnibus\Http\Redaction;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -57,7 +58,9 @@ final class Api
             $content = $response->getContent(false);
             $data = json_decode($content, true);
         } catch (HttpExceptionInterface|\JsonException $e) {
-            throw new CarrierException('bluedart', 'Blue Dart request failed: '.$e->getMessage(), null, $e);
+            $secrets = $this->secrets();
+
+            throw Redaction::withoutArguments(new CarrierException('bluedart', 'Blue Dart request failed: '.Redaction::text($e->getMessage(), $secrets), null, Redaction::copy($e, $secrets)));
         }
         if (!\is_array($data)) {
             // Tracking answers XML
@@ -65,10 +68,10 @@ final class Api
             if (false !== $xml && $status < 400 && 'html' !== strtolower($xml->getName())) { // not a proxy's error page
                 return json_decode(json_encode($xml), true) ?: [];
             }
-            throw new CarrierException('bluedart', sprintf('Blue Dart answered HTTP %d with a body that is neither its JSON nor its XML.', $status));
+            throw Redaction::withoutArguments(new CarrierException('bluedart', sprintf('Blue Dart answered HTTP %d with a body that is neither its JSON nor its XML.', $status)));
         }
         if ($status >= 400) {
-            throw new CarrierException('bluedart', (string) ($data['error-response'][0]['Message'] ?? $data['Message'] ?? $data['message'] ?? $data['fault']['faultstring'] ?? sprintf('HTTP %d', $status)), isset($data['error-response'][0]['ErrorCode']) ? (string) $data['error-response'][0]['ErrorCode'] : null);
+            throw Redaction::withoutArguments(new CarrierException('bluedart', (string) ($data['error-response'][0]['Message'] ?? $data['Message'] ?? $data['message'] ?? $data['fault']['faultstring'] ?? sprintf('HTTP %d', $status)), isset($data['error-response'][0]['ErrorCode']) ? (string) $data['error-response'][0]['ErrorCode'] : null));
         }
 
         return $data;
@@ -82,14 +85,26 @@ final class Api
         try {
             $data = $this->http->request('GET', $this->base().'/in/transportation/token/v1/login', ['headers' => ['ClientID' => $this->clientId, 'clientSecret' => $this->clientSecret, 'Accept' => 'application/json'], 'timeout' => $this->timeout])->toArray(false);
         } catch (HttpExceptionInterface $e) {
-            throw new CarrierException('bluedart', 'Blue Dart gave no token: '.$e->getMessage(), null, $e);
+            $secrets = $this->secrets();
+
+            throw Redaction::withoutArguments(new CarrierException('bluedart', 'Blue Dart gave no token: '.Redaction::text($e->getMessage(), $secrets), null, Redaction::copy($e, $secrets)));
         }
         if (empty($data['JWTToken'])) {
-            throw new CarrierException('bluedart', (string) ($data['error-response'][0]['Message'] ?? 'Blue Dart gave no token: check the client id and secret.'));
+            throw Redaction::withoutArguments(new CarrierException('bluedart', (string) ($data['error-response'][0]['Message'] ?? 'Blue Dart gave no token: check the client id and secret.')));
         }
         $this->token = (string) $data['JWTToken'];
         $this->expiresAt = time() + 23 * 3600;
 
         return $this->token;
+    }
+
+    /**
+     * What a failure must not carry: the credentials and the token, and what a request made of them.
+     *
+     * @return list<string>
+     */
+    private function secrets(string ...$more): array
+    {
+        return [$this->clientSecret, $this->licenceKey, (string) $this->token, ...$more];
     }
 }

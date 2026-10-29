@@ -220,6 +220,12 @@ Every failure is an `Omnibus\Exception\CarrierException` whose `carrier` is `blu
 A missing option among the five credentials is an `InvalidConfigException` when the gateway is
 built; `Pickup`, `GetSlip` and `Paperless` raise `RequestNotSupportedException` before any call.
 
+No failure carries the client secret, the licence key and the JWT: a network error's message has
+them masked as `***` (the key parameters of a URL too), its previous is a copy of the HTTP client's
+exception (the same class and code), and no trace of the chain keeps its arguments, where the
+request's options stood ([No secret in a
+failure](https://github.com/glitchr-omnisense/omnibus/blob/2.x/docs/errors.md#no-secret-in-a-failure)).
+
 ## Verified, and not
 
 Tested offline: `Tests/BluedartGatewayTest.php` (served products rated with configured prices and
