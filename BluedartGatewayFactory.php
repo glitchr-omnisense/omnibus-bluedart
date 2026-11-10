@@ -30,13 +30,14 @@ final class BluedartGatewayFactory extends GatewayFactory
         $config->defaults([
             'omnibus.factory_name' => 'bluedart',
             'omnibus.factory_title' => 'Blue Dart',
+            'omnibus.policy' => __DIR__.'/policy.json',
             'omnibus.required_options' => ['client_id', 'client_secret', 'login_id', 'licence_key', 'customer_code'],
             'origin_area' => null,
             'sandbox' => false,
             'omnibus.api' => function (Config $c) {
                 $http = $this->http ?? HttpClient::create();
 
-                return new Api($http, (string) $c['client_id'], (string) $c['client_secret'], (string) $c['login_id'], (string) $c['licence_key'], (string) $c['customer_code'], $c['origin_area'] ?: null, (bool) $c['sandbox']);
+                return new Api($http, (string) $c['client_id'], (string) $c['client_secret'], (string) $c['login_id'], (string) $c['licence_key'], (string) $c['customer_code'], $c['origin_area'] ?: null, (bool) $c['sandbox'], backoff: $c->backoff());
             },
             'omnibus.action.rating' => static fn (Config $c) => $c->get('rates') ? null : new RatingAction(),
             'omnibus.action.shipping' => new ShippingAction(),

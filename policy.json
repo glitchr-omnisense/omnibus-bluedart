@@ -1,0 +1,38 @@
+{
+    "$schema": "https://github.com/glitchr-omnisense/contracts/blob/1.x/resources/usage-policy.schema.json",
+    "provider": "bluedart",
+    "rateLimits": null,
+    "concurrency": null,
+    "rights": {
+        "commercial": "contract",
+        "openSourceRequired": false,
+        "caching": {
+            "permission": "unknown",
+            "maxTtl": null
+        },
+        "storage": "unknown",
+        "redistribution": "unknown",
+        "attribution": {
+            "required": false,
+            "text": null,
+            "url": null,
+            "where": []
+        },
+        "licence": null
+    },
+    "requirements": {
+        "key": true,
+        "userAgent": {
+            "required": false,
+            "pattern": null
+        }
+    },
+    "provenance": {
+        "terms": null,
+        "policy": null,
+        "verifiedAt": null,
+        "declaredBy": "maintainer",
+        "contact": null,
+        "notes": "The package's API calls are built from published documentation and are flagged unverified in its README (no test account yet): its usage terms were not checked against a live account either, so verifiedAt stays null and the limits unknown. Access needs an account with the carrier: commercial use under its contract. A shipment is sent once by the package."
+    }
+}

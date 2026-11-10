@@ -1,0 +1,427 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot access offset ''IsError'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/CancelAction.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Binary operation "\." between ''Blue Dart '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Cannot access offset ''ExpectedDateDelivery'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Cannot access offset ''IsError'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Parameter \#2 \$service of class Omnibus\\Model\\Rate constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 3
+			path: Action/RatingAction.php
+
+		-
+			message: '#^Cannot access offset ''AWBNo'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Cannot access offset ''AWBPrintContent'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Cannot access offset ''IsError'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Cannot access offset ''Status'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Cannot access offset ''StatusCode'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Cannot access offset ''StatusInformation'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 6
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Action\\ShippingAction\:\:consignee\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Action\\ShippingAction\:\:shipper\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, ''chr'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between null and array\<array\{Breadth\: int, Count\: 1, Height\: int, Length\: int\}\|string\>\|bool\|float\|int\|string will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: Action/ShippingAction.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Binary operation "\." between mixed and '' '' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Cannot access offset ''ScanDetail'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Cannot access offset ''Scans'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Cannot access offset ''Shipment'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Cannot access offset ''StatusType'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Parameter \#1 \$type of static method Omnibus\\Bluedart\\Action\\TrackingAction\:\:status\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Parameter \#2 \$scan of static method Omnibus\\Bluedart\\Action\\TrackingAction\:\:status\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Parameter \#4 \$location of class Omnibus\\Model\\TrackingEvent constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Parameter \#5 \$code of class Omnibus\\Model\\TrackingEvent constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/TrackingAction.php
+
+		-
+			message: '#^Cannot access offset ''ErrorCode'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Cannot access offset ''Message'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Api.php
+
+		-
+			message: '#^Cannot access offset ''faultstring'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: Api.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 4
+			path: Api.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Api\:\:call\(\) has parameter \$body with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Api\:\:call\(\) has parameter \$query with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Api\:\:call\(\) should return array\<string, mixed\> but returns array\<mixed, mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Api\:\:call\(\) should return array\<string, mixed\> but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Api\:\:secrets\(\) should return list\<string\> but returns non\-empty\-array\<int\<0, max\>\|string, string\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Api.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 5
+			path: BluedartGatewayFactory.php
+
+		-
+			message: '#^Parameter \#7 \$originArea of class Omnibus\\Bluedart\\Api constructor expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: BluedartGatewayFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: Tests/BluedartContractTest.php
+
+		-
+			message: '#^Method Omnibus\\Bluedart\\Tests\\BluedartContractTest\:\:sessionRoutes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/BluedartContractTest.php
+
+		-
+			message: '#^Cannot access offset ''Consignee'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''ConsigneePincode'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''CustomerCode'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''DeclaredValue'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''LoginID'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''ProductCode'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''Request'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''Services'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''Shipper'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''pProductCode'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''pSubProductCode'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset ''profile'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset 1 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset 2 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access offset 3 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Cannot access property \$location on Omnibus\\Model\\TrackingEvent\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Parameter \#1 \$body of class Symfony\\Component\\HttpClient\\Response\\MockResponse constructor expects iterable\<string\|Throwable\>\|string, string\|false given\.$#'
+			identifier: argument.type
+			count: 7
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function str_contains expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertContains\(\) expects iterable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Property Omnibus\\Bluedart\\Tests\\BluedartGatewayTest\:\:\$calls type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Property Omnibus\\Bluedart\\Tests\\BluedartGatewayTest\:\:\$tracking type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/BluedartGatewayTest.php
+
+		-
+			message: '#^Parameter \#1 \$body of class Symfony\\Component\\HttpClient\\Response\\MockResponse constructor expects iterable\<string\|Throwable\>\|string, string\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/UnreachableChainTest.php
