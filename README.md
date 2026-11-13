@@ -4,6 +4,43 @@ Blue Dart for [omnisense/omnibus](https://github.com/glitchr-omnisense/omnibus):
 transit time (Transit API), waybills with their labels (Waybill API), tracking (Tracking API) and
 cancellation - Blue Dart's API gateway with a JWT.
 
+## Install and a first call
+
+```sh
+composer require omnibus/bluedart
+```
+
+No account for this first call: Blue Dart's answer is recorded (`Omnibus\Testing\RecordedHttpClient`
+answers in place of the API), so nothing leaves the process. With your own credentials, give the
+factory your HTTP client (or none: it makes its own) and drop the recorded one.
+
+```php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Omnibus\Bluedart\BluedartGatewayFactory;
+use Omnibus\Testing\RecordedHttpClient;
+
+// Blue Dart's answer, recorded: no account, and nothing leaves the process.
+$http = new RecordedHttpClient([
+    '/token/v1/login' => ['JWTToken' => 'jwt'],
+    '/tracking/v1/shipment' => ['ShipmentData' => ['Shipment' => ['WaybillNo' => '79123456789', 'StatusType' => 'DL', 'Scans' => ['ScanDetail' => [
+        ['Scan' => 'SHIPMENT DELIVERED', 'ScanCode' => '000', 'ScanDate' => '02-Oct-2026', 'ScanTime' => '11:30', 'ScanType' => 'DL', 'ScannedLocation' => 'Bengaluru'],
+    ]]]]],
+]);
+$gateway = (new BluedartGatewayFactory($http))->create(['client_id' => 'id', 'client_secret' => 'secret', 'login_id' => 'BOM12345', 'licence_key' => 'lic', 'customer_code' => '123456', 'origin_area' => 'BOM', 'sandbox' => true]);
+
+$tracking = $gateway->track('79123456789');
+echo $tracking->status->value, ' - ', $tracking->latest()?->description, "\n";   // delivered - SHIPMENT DELIVERED
+```
+
+A real call needs a Blue Dart account (the credentials below). **Unverified**: the request and
+answer shapes come from Blue Dart's published documentation, and the package has not been run
+against its service.
+
+## Configuration
+
 ```php
 $gateway = (new BluedartGatewayFactory($http))->create($options);   // $http: the application's HTTP client - none given, the factory makes its own; the options below
 ```
